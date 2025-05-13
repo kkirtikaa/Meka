@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate} from 'react-router-dom';
 import './Login.css';
 
 function Signup({ show, onClose }) {
+  const navigate = useNavigate();
   const [signupData, setSignupData] = React.useState({
     firstName: '',
     lastName: '',
@@ -9,6 +11,18 @@ function Signup({ show, onClose }) {
     password: ''
   });
 const [successMessage, setSuccessMessage] = React.useState('');
+React.useEffect(() => { 
+  if (show) {
+    setSignupData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: ''
+    });
+    setSuccessMessage('');
+  }
+}
+, [show]);
   const handleSignupChange = (e) => {
     setSignupData({
       ...signupData,
@@ -26,7 +40,7 @@ const [successMessage, setSuccessMessage] = React.useState('');
       onClose(); // Close the modal after success message is displayed
     }, 2000);
     
-    
+   navigate('/dashboard'); // Redirect to dashboard after successful signup 
     
   };
 

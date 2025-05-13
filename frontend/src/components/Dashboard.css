@@ -1,0 +1,76 @@
+.dashboard{
+    background-color: #d492d8;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-container{
+background-color: white;
+height: 80%;
+width: 80%;
+border-radius: 40px;
+justify-content: center;
+padding: 20px;
+box-shadow:  4px 12px rgba(0, 0, 0, 0.2);
+}
+.button {
+    background-color: pink;
+    color: white;
+    margin-right: 10px;
+    font-size: 20px; /* Increase font size for larger text */
+    display: block;
+    padding: 15px 30px; /* Increase padding for a larger button */
+    border-radius: 10px; /* Optional: to make the corners more rounded */
+    width:20%;
+    height: 10%;
+}
+
+.button:hover {
+    background-color: #852c8a;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px; /* spacing between buttons */
+    padding: 12px 24px;
+}
+
+.image-container img {
+    width: 200px; /* Fixed width for all images */
+    height: 200px; /* Fixed height for all images */
+    object-fit: cover; /* Crops and fits the image */
+    border-radius: 8px; /* Optional rounded corners */
+    padding: 12px 24px;
+}
+.container{
+    background-color: aliceblue;
+    height: 15%;
+    width: 70%;
+    border-radius: 40px;
+justify-content: center;
+
+box-shadow:  4px 12px rgba(0, 0, 0, 0.2);
+}
+.select:hover{
+   border-color: black;
+}
+.but {
+background-color: pink;
+    color: white;
+    margin-right: 10px;
+    font-size: 20px; /* Increase font size for larger text */
+    display: block;
+    padding: 15px 30px; /* Increase padding for a larger button */
+    border-radius: 10px; /* Optional: to make the corners more rounded */
+    width:80%;
+    height: 10%;
+    margin-top: 10%;
+    border-color: pink;
+    box-shadow: none;
+    outline: none;
+  border: none;
+}
+.but:hover {
+    background-color: #852c8a;
+}

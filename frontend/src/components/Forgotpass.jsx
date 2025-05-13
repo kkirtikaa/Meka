@@ -9,6 +9,19 @@ function Forgotpass({show,onClose}) {
       });
       const [errorMessages, setErrorMessages] = React.useState([]);  
       const [successMessage, setSuccessMessage] = React.useState('');
+      React.useEffect(() => {
+        if (show) {
+
+          setForgotpassData({
+            email: '',  
+            newpassword: '',
+
+            confirmpassword: ''
+          });
+          setErrorMessages([]); // clear errors on modal open
+          setSuccessMessage(''); // clear success message on modal open
+        }
+      }, [show]);
       const handleForgotpassChange = (e) => {
         setForgotpassData({
           ...ForgotpassData,

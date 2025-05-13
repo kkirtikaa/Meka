@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';   
 import './Login.css';
 import { Link } from 'react-router-dom';
 import pic1 from '../asset/pic1.jpg';
@@ -9,6 +10,26 @@ import Signup from './Signup';
 import Forgotpass from './Forgotpass';
 
 function Login() {
+  const navigate = useNavigate();
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: ''
+  });
+  const handleChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  };
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+  
+    // TODO: Add real validation/authentication here if needed
+    if (loginData.email && loginData.password) {
+      // Navigate to dashboard or home page after login
+      navigate('/Dashboard'); // change this route as per your app
+    } else {
+      alert('Please enter email and password');
+    }
+  };
+    
   const [showForgotModal, setShowForgotModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
  
@@ -31,9 +52,22 @@ function Login() {
             Capture moments and get instant, creative captions powered by AI.
           </p>
 
-          <form>
-            <input className='input-field' type="email" placeholder="Email" required />
-            <input className='input-field' type="password" placeholder="Password" required />
+          <form onSubmit={handleLoginSubmit}>
+            <input
+              className='input-field'
+              type="email"
+              name="email"
+              value={loginData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required />
+            <input
+              className='input-field'
+              type="password"
+              name="password"
+              value={loginData.password}
+              onChange={handleChange}
+              placeholder="Password" required />
 
             <div className='forgot-container'>
               <span className='forgot-link' onClick={() => setShowForgotModal(true)}>
