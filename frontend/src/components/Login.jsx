@@ -8,6 +8,7 @@ import pic3 from '../asset/pic3.jpg';
 import pic4 from '../asset/pic4.jpg';
 import Signup from './Signup';
 import Forgotpass from './Forgotpass';
+import { login, setAuthSession } from '../api';
 
 function Login() {
   const navigate = useNavigate();
@@ -20,14 +21,15 @@ function Login() {
   };
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-  
-    // TODO: Add real validation/authentication here if needed
-    if (loginData.email && loginData.password) {
-      // Navigate to dashboard or home page after login
-      navigate('/Dashboard'); // change this route as per your app
-    } else {
-      alert('Please enter email and password');
-    }
+    (async () => {
+      try {
+        const result = await login({ email: loginData.email, password: loginData.password });
+        setAuthSession({ token: result.token, user: result.user });
+        navigate('/dashboard');
+      } catch (err) {
+        alert(err.message || 'Login failed');
+      }
+    })();
   };
     
   const [showForgotModal, setShowForgotModal] = useState(false);
@@ -75,7 +77,7 @@ function Login() {
               </span>
             </div>
 
-            <button className='button' type="submit">Login</button>
+            <button className='login-button' type="submit">Login</button>
 
             <div className="signup-container">
               Don’t have an account?{' '}
@@ -124,3 +126,4 @@ function Login() {
 }
 
 export default Login;
+

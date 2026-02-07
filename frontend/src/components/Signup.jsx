@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate} from 'react-router-dom';
 import './Login.css';
+import { register, login, setAuthSession } from '../api';
 
 function Signup({ show, onClose }) {
   const navigate = useNavigate();
@@ -34,13 +35,28 @@ React.useEffect(() => {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-   
-    setSuccessMessage('Sign-up successfully!');
-    setTimeout(() => {
-      onClose(); // Close the modal after success message is displayed
-    }, 2000);
-    
-   navigate('/dashboard'); // Redirect to dashboard after successful signup 
+    (async () => {
+      try {
+        await register({
+          email: signupData.email,
+          password: signupData.password,
+          username: `${signupData.firstName} ${signupData.lastName}`.trim()
+        });
+
+        // Auto-login after successful registration
+        const auth = await login({ email: signupData.email, password: signupData.password });
+        setAuthSession({ token: auth.token, user: auth.user });
+
+        setSuccessMessage('Sign-up successfully!');
+        setTimeout(() => {
+          onClose();
+          navigate('/dashboard');
+        }, 900);
+      } catch (err) {
+        setSuccessMessage('');
+        alert(err.message || 'Signup failed');
+      }
+    })();
     
   };
 

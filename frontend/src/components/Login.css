@@ -22,18 +22,19 @@ align-items: center;
     text-align: center;
     width: 400px;
     order: -1;
-    /* border-top-right-radius:10% ;
-    border-bottom-right-radius:10% ; */
+    border-top-right-radius:0% ;
+    border-bottom-right-radius:0% ;
     margin-right: 0%;
     margin-left: 0%;
+  
     
 
 }
 .right-side{
     background-color: rgb(251, 219, 224);
     border-radius: 40px;
-    /* border-top-left-radius: 0%;
-    border-bottom-left-radius:0% ; */
+    border-top-left-radius: 0%;
+    border-bottom-left-radius:0% ;
     padding: 40px;
     height: 80%;
     justify-content: center;
@@ -191,4 +192,7 @@ align-items: center;
   color: green;
   font-weight: bold;
   margin-top: 10px;
+}
+.login-button:hover{
+  background-color: #852c8a;
 }

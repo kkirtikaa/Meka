@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Dashboard.css';
 import camera from '../asset/camera.jpg';
+import { generateCaption, getAuthSession } from '../api';
 
 function Dashboard() {
   const [sentiment, setSentiment] = useState('');
   const [Length, setLength] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [generatedCaption, setGeneratedCaption] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
 
@@ -22,6 +26,8 @@ function Dashboard() {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
+  setSelectedFile(file);
+  setGeneratedCaption('');
     }
   };
 
@@ -40,9 +46,43 @@ function Dashboard() {
 
       const imageUrl = canvas.toDataURL('image/png');
       setSelectedImage(imageUrl);
+
+      // Convert capture to Blob/File so we can send it to backend
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], 'capture.png', { type: 'image/png' });
+          setSelectedFile(file);
+          setGeneratedCaption('');
+        }
+      }, 'image/png');
+
       stopCamera();
     } else {
       setIsCameraOpen(true); // This triggers video render
+    }
+  };
+
+  const handleGenerateCaption = async () => {
+    if (!selectedFile) {
+      alert('Please upload or capture an image first.');
+      return;
+    }
+
+    try {
+      setIsGenerating(true);
+      const { token, user } = getAuthSession();
+      const res = await generateCaption({
+        imageFile: selectedFile,
+        sentiment,
+        length: Length,
+        userId: user?.id,
+        token
+      });
+      setGeneratedCaption(res.caption || '');
+    } catch (err) {
+      alert(err.message || 'Failed to generate caption');
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -149,7 +189,9 @@ function Dashboard() {
               color: '#d492d8'
             }}
           />
-          <button className='but'>Generate Caption</button>
+          <button className='but' onClick={handleGenerateCaption} disabled={isGenerating}>
+            {isGenerating ? 'Generating...' : 'Generate Caption'}
+          </button>
         </div>
 
         <div className="image-container">
@@ -182,7 +224,11 @@ function Dashboard() {
         </div>
 
         <h2 style={{ color: 'purple' }}>Generated Caption</h2>
-        <div className="container"></div>
+        <div className="container" style={{ padding: '16px' }}>
+          <div style={{ color: '#333', fontSize: '18px' }}>
+            {generatedCaption || 'Your caption will appear here.'}
+          </div>
+        </div>
       </div>
     </div>
   );
