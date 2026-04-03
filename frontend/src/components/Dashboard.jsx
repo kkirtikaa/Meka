@@ -144,7 +144,6 @@ function Dashboard() {
               fontSize: '15px',
               marginTop: '5px',
               display: 'block',
-              marginBottom: '10px',
               color: '#d492d8',
               marginBottom: '20px'
             }}

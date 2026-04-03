@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';   
 import './Login.css';
-import { Link } from 'react-router-dom';
 import pic1 from '../asset/pic1.jpg';
 import pic2 from '../asset/pic2.jpg';
 import pic3 from '../asset/pic3.jpg';
