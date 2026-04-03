@@ -7,3 +7,4 @@ PyJWT>=2.8.0
 Werkzeug>=3.0.0
 cloudinary>=1.41.0
 huggingface_hub>=0.30.0
+gunicorn>=22.0.0
