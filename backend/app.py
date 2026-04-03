@@ -8,7 +8,7 @@ from routes.auth import auth_bp
 from routes.captions import captions_bp
 
 # Load environment variables
-load_dotenv()
+load_dotenv(override=True)
 
 app = Flask(__name__)
 CORS(app)

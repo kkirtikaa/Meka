@@ -36,8 +36,15 @@ def generate_caption_api():
         length = (request.form.get('length') or 'short').strip()
         user_id = request.form.get('user_id')
 
-        # Generate caption (currently stubbed rule-based in model.py)
-        caption = generate_caption(image_file.filename, sentiment=sentiment.lower(), length=str(length).lower())
+        image_bytes = image_file.read()
+        image_file.stream.seek(0)
+
+        caption = generate_caption(
+            image_bytes=image_bytes,
+            mime_type=(image_file.mimetype or 'image/jpeg'),
+            sentiment=sentiment.lower(),
+            length=str(length).lower()
+        )
 
         # Optional Cloudinary upload if configured
         image_url = None
